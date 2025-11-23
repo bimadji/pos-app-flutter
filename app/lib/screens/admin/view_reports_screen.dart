@@ -1,127 +1,195 @@
 import 'package:flutter/material.dart';
+import '../../models/product.dart';
+import '../../utils/pdf_report.dart';
+import '../../models/sales_record.dart';
 
 class ViewReportsScreen extends StatelessWidget {
   final int totalProducts;
   final int lowStockCount;
   final int totalUsers;
+  final List<Product> products;
 
   const ViewReportsScreen({
     super.key,
     required this.totalProducts,
     required this.lowStockCount,
     required this.totalUsers,
+    required this.products,
   });
-
-  // --- FUNGSI DEKORASI HEADER ---
-  Widget _buildDecorativeHeader(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
-      color: const Color(0xFF2196F3), 
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Icon(Icons.assessment, color: Colors.white, size: 30), // Ikon Laporan
-          SizedBox(width: 10),
-          Text(
-            'Laporan & Analisa',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-  // --- END FUNGSI DEKORASI ---
 
   @override
   Widget build(BuildContext context) {
+    List<Product> localProducts = List.from(products);
+    List<SalesRecord> salesHistory = [];
+
+
+    if (localProducts.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(title: const Text("Laporan Penjualan")),
+        body: const Center(child: Text("Belum ada data produk")),
+      );
+    }
+    bool allZero = localProducts.every((p) => p.sold == 0);
+
+    // =============== sort produk berdasarkan terjual ===============
+    localProducts.sort((a, b) => b.sold.compareTo(a.sold));
+
+    final Product mostSold = localProducts.first;
+    final Product? leastSold = localProducts.length > 1
+        ? localProducts.last
+        : null;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Laporan Penjualan & Inventaris'),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black87,
-        elevation: 0,
+        title: const Text("Laporan Penjualan", style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.blue,
       ),
-      backgroundColor: const Color(0xFFE3F2FD), 
-      body: Column( 
-        children: <Widget>[
-          _buildDecorativeHeader(context), // <--- TAMBAH DEKORASI
-          Expanded( 
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: <Widget>[
-                  _buildReportCard(
-                    context,
-                    icon: Icons.restaurant_menu, // <-- ICON FNB
-                    title: 'Total Menu',
-                    value: totalProducts.toString(), 
-                    color: Colors.orange,
-                  ),
-                  _buildReportCard(
-                    context,
-                    icon: Icons.kitchen, // <-- ICON FNB (Stok/Bahan Baku)
-                    title: 'Item Stok Rendah',
-                    value: lowStockCount.toString(), 
-                    color: Colors.red,
-                  ),
-                  _buildReportCard(
-                    context,
-                    icon: Icons.people,
-                    title: 'Total Karyawan',
-                    value: totalUsers.toString(), 
-                    color: Colors.green,
-                  ),
-                ],
-              ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: ListView(
+          children: [
+            // info cards
+            _infoCard(
+              title: "Total Produk",
+              value: "$totalProducts",
+              icon: Icons.inventory,
             ),
+            _infoCard(
+              title: "Produk Stok Rendah",
+              value: "$lowStockCount",
+              icon: Icons.warning_amber,
+            ),
+            _infoCard(
+              title: "Total Karyawan",
+              value: "$totalUsers",
+              icon: Icons.people,
+            ),
+
+            const SizedBox(height: 20),
+            //
+            // if (allZero)
+            //   _reportTile(
+            //     title: "Belum Ada Penjualan",
+            //     productName: "-",
+            //     value: "0",
+            //     color: Colors.grey,
+            //   )
+            // else ...[
+            //   _reportTile(
+            //     title: "Produk Terlaris",
+            //     productName: mostSold.name,
+            //     value: "${mostSold.sold} Terjual",
+            //     color: Colors.green,
+            //   ),
+            //
+            //   const SizedBox(height: 12),
+            //
+            //   if (leastSold != null)
+            //     _reportTile(
+            //       title: "Paling Sedikit Terjual",
+            //       productName: leastSold.name,
+            //       value: "${leastSold.sold} Terjual",
+            //       color: Colors.red,
+            //     ),
+            // ],
+            ElevatedButton(
+              onPressed: () {
+                exportSalesReportPDF(
+                  products: products, // data produk dikirim ke PDF
+                  salesHistory: salesHistory, // data histori penjualan
+                );
+              },
+              child: Text("Export PDF"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _infoCard({
+    required String title,
+    required String value,
+    required IconData icon,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0x33000000),
+            blurRadius: 5,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Icon(icon, size: 32, color: Colors.blue),
+          const SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title, style: const TextStyle(fontSize: 16)),
+              Text(
+                value,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 
-  Widget _buildReportCard(
-      BuildContext context, {
-        required IconData icon,
-        required String title,
-        required String value,
-        required Color color,
-      }) {
-    return Card(
-      elevation: 4,
-      margin: const EdgeInsets.only(bottom: 15),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Container(
-        padding: const EdgeInsets.all(15),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          border: Border(left: BorderSide(color: color, width: 6)), 
-        ),
-        child: Row(
-          children: <Widget>[
-            Icon(icon, size: 30, color: color),
-            const SizedBox(width: 15),
-            Expanded(
-              child: Text(
-                title,
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xFF333333)),
-              ),
+  Widget _reportTile({
+    required String title,
+    required String productName,
+    required String value,
+    required Color color,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        border: Border.all(color: color.withOpacity(0.4), width: 2),
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.white,
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.bar_chart, size: 32, color: color),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(productName),
+              ],
             ),
-            Text(
-              value,
-              style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: color
-              ),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: color,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

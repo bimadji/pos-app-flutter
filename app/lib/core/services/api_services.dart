@@ -2,9 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String baseUrl = 'http://localhost/pos_api'; // ganti sesuai IP nanti
+  static const String baseUrl = 'http://localhost/pos_api';
 
-  // 🔐 LOGIN
   static Future<Map<String, dynamic>> login(String username, String password) async {
     final response = await http.post(
       Uri.parse('$baseUrl/auth/login.php'),
@@ -15,7 +14,6 @@ class ApiService {
     return jsonDecode(response.body);
   }
 
-  // 📦 GET PRODUCTS
   static Future<List<dynamic>> getProducts() async {
     final response = await http.get(Uri.parse('$baseUrl/products/get_products.php'));
     final data = jsonDecode(response.body);

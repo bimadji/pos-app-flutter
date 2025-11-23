@@ -4,7 +4,6 @@ class AuthProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  // Simulasi user data (bisa diganti API nanti)
   final Map<String, String> _admin = {'username': 'admin', 'password': 'admin123'};
   final Map<String, String> _kasir = {'username': 'kasir', 'password': 'kasir123'};
 

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import '../admin/admin_dashboard.dart';
+import '../../core/services/auth_services.dart';
 import '../admin/dashboard_screen.dart';
-import 'package:app/core/services/auth_services.dart';
-// import '../cashier/cashier_dashboard.dart';
-// import '../customer/customer_home.dart';
-
+import '../cashier/order_page.dart';
+import '../auth/reset_password_screen.dart';
+import '../auth/sign_up_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool _obscurePassword = true;
   bool _rememberMe = true;
+  bool _loading = false; // loading indicator
 
   @override
   void dispose() {
@@ -44,10 +44,13 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    final authService = AuthService();
+    setState(() => _loading = true);
 
     try {
+      final authService = AuthService();
       final result = await authService.login(u, p);
+
+      setState(() => _loading = false);
 
       if (result['success'] == true) {
         final role = result['role'];
@@ -57,17 +60,13 @@ class _LoginScreenState extends State<LoginScreen> {
           case 'admin':
             targetScreen = const DashboardScreen();
             break;
-          // case 'cashier':
-          //   targetScreen = const CashierDashboard();
-          //   break;
-          // case 'customer':
-          //   targetScreen = const CustomerHome();
-          //   break;
+          case 'kasir':
+            targetScreen = const OrderPage();
+            break;
           default:
             targetScreen = const DashboardScreen();
         }
 
-        // Navigasi ganti layar tanpa bisa kembali
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => targetScreen),
@@ -78,244 +77,251 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       }
     } catch (e) {
+      setState(() => _loading = false);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Login failed: $e')),
       );
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // supaya statusbar blend dengan background
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFFFFA726), Color(0xFFFF9800)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+      body: Stack(
+        children: [
+          _buildLoginUI(context),
+          if (_loading)
+            Container(
+              color: Colors.black26,
+              child: const Center(child: CircularProgressIndicator()),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLoginUI(BuildContext context) {
+    // **UI sama persis seperti versi lama**
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xFFFFA726), Color(0xFFFF9800)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      child: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 36),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.18),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Icon(Icons.restaurant_menu,
+                    color: Colors.white, size: 48),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'POS Food & Beverages',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                'Sign in to your employee account',
+                style: TextStyle(color: Colors.white70),
+              ),
+              const SizedBox(height: 30),
+              _buildLoginCard(context),
+              const SizedBox(height: 36),
+            ],
           ),
         ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: 36),
+      ),
+    );
+  }
 
-                // logo (pakai PNG dari assets/images/logo.png)
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.18),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: const Icon(Icons.restaurant_menu,
-                      color: Colors.white, size: 48),
+  Widget _buildLoginCard(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          )
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Center(
+            child: Text(
+              'Welcome Back!',
+              style: TextStyle(
+                  fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          const SizedBox(height: 6),
+          const Center(
+            child: Text(
+              'Please sign in to continue',
+              style: TextStyle(color: Colors.grey),
+            ),
+          ),
+          const SizedBox(height: 18),
+          TextField(
+            controller: usernameController,
+            decoration: const InputDecoration(
+              labelText: 'Username',
+              prefixIcon: Icon(Icons.person_outline),
+              border: OutlineInputBorder(),
+            ),
+          ),
+          const SizedBox(height: 14),
+          TextField(
+            controller: passwordController,
+            obscureText: _obscurePassword,
+            decoration: InputDecoration(
+              labelText: 'Password',
+              prefixIcon: const Icon(Icons.lock_outline),
+              suffixIcon: IconButton(
+                onPressed: _togglePasswordVisibility,
+                icon: Icon(
+                  _obscurePassword
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
                 ),
-
-                const SizedBox(height: 16),
-                const Text(
-                  'POS Food & Beverages',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22,
+              ),
+              border: const OutlineInputBorder(),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Checkbox(
+                    value: _rememberMe,
+                    onChanged: (val) {
+                      setState(() {
+                        _rememberMe = val ?? false;
+                      });
+                    },
+                  ),
+                  const Text("Remember me"),
+                ],
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const ResetPasswordScreen()),
+                  );
+                },
+                child: const Text(
+                  "Forgot Password?",
+                  style: TextStyle(color: Colors.orange),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 48,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
+                ),
+              ),
+              onPressed: _attemptLogin,
+              child: const Text(
+                "SIGN IN",
+                style: TextStyle(
                     fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.white),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: const [
+              Expanded(child: Divider()),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Text("OR"),
+              ),
+              Expanded(child: Divider()),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Center(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {},
+                  child: Image.asset(
+                    'assets/images/google.png',
+                    width: 36,
+                    height: 36,
+                    fit: BoxFit.contain,
                   ),
                 ),
-                const SizedBox(height: 6),
-                const Text(
-                  'Sign in to your account',
-                  style: TextStyle(color: Colors.white70),
-                ),
-                const SizedBox(height: 30),
-
-                // Card putih
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
-                        blurRadius: 12,
-                        offset: const Offset(0, 6),
-                      )
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const Center(
-                        child: Text(
-                          'Welcome Back!',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      const Center(
-                        child: Text(
-                          'Please sign in to continue',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ),
-                      const SizedBox(height: 18),
-
-                      // Username field
-                      TextField(
-                        controller: usernameController,
-                        decoration: const InputDecoration(
-                          labelText: 'Username',
-                          prefixIcon: Icon(Icons.person_outline),
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      const SizedBox(height: 14),
-
-                      // Password field dengan toggle mata
-                      TextField(
-                        controller: passwordController,
-                        obscureText: _obscurePassword,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          prefixIcon: const Icon(Icons.lock_outline),
-                          // tombol mata
-                          suffixIcon: IconButton(
-                            onPressed: _togglePasswordVisibility,
-                            icon: Icon(
-                              // ganti ikon sesuai state
-                              _obscurePassword
-                                  ? Icons.visibility_outlined
-                                  : Icons.visibility_off_outlined,
-                            ),
-                          ),
-                          border: const OutlineInputBorder(),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-
-                      // Remember & forgot
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Checkbox(
-                                value: _rememberMe,
-                                onChanged: (val) {
-                                  setState(() {
-                                    _rememberMe = val ?? false;
-                                  });
-                                },
-                              ),
-                              const Text("Remember me"),
-                            ],
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              // forgot password action
-                            },
-                            child: const Text(
-                              "Forgot Password?",
-                              style: TextStyle(color: Colors.orange),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-
-                      // Sign in button
-                      SizedBox(
-                        height: 48,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.orange,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(24),
-                            ),
-                          ),
-                          onPressed: () {
-                            _attemptLogin();
-                          },
-                          child: const Text(
-                            "SIGN IN",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-
-                      // Divider OR
-                      Row(
-                        children: const [
-                          Expanded(child: Divider()),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8),
-                            child: Text("OR"),
-                          ),
-                          Expanded(child: Divider()),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-
-                      Center(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {},
-                              child: Image.asset(
-                                'assets/images/google.png'
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Image.asset(
-                                'assets/images/facebook.png',
-                                width: 36,
-                                height: 36,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(height: 18),
-
-                      // Sign up link
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text("Don’t have an account? "),
-                          GestureDetector(
-                            onTap: () {},
-                            child: const Text(
-                              "Sign Up",
-                              style: TextStyle(
-                                  color: Colors.orange,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                const SizedBox(width: 20),
+                GestureDetector(
+                  onTap: () {},
+                  child: Image.asset(
+                    'assets/images/facebook.png',
+                    width: 36,
+                    height: 36,
+                    fit: BoxFit.contain,
                   ),
                 ),
-                const SizedBox(height: 36),
               ],
             ),
           ),
-        ),
+          const SizedBox(height: 18),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("Don’t have an account? "),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => SignUpScreen()),
+                  );
+                },
+                child: const Text(
+                  "Sign Up",
+                  style: TextStyle(
+                      color: Colors.orange,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

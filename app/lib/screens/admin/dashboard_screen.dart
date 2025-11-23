@@ -3,20 +3,18 @@ import 'package:app/models/user.dart';
 import 'package:app/models/product.dart';
 import 'package:app/widgets/dashboard_card.dart';
 import 'package:app/widgets/action_button.dart';
+import '../../core/services/product_service.dart';
+import '../../core/services/user_service.dart';
+import '../auth/login_screen.dart';
 import 'manage_products_screen.dart';
 import 'manage_users_screen.dart';
 import 'view_reports_screen.dart';
 
-// Data awal
-List<Product> initialProducts = [
-  Product(id: 'P001', name: 'Es Kopi Susu', price: 18000, stock: 50),
-  Product(id: 'P002', name: 'Americano', price: 15000, stock: 70),
-  Product(id: 'P003', name: 'Nasi Goreng', price: 25000, stock: 20), 
-];
-List<AppUser> initialUsers = [
-  AppUser(id: 'U001', name: 'Manajer Toko', role: 'Administrator'),
-  AppUser(id: 'U002', name: 'Barista/Kasir', role: 'Cashier'),
-];
+int totalProducts = 0;
+int totalUsers = 0;
+int lowStockCount = 0;
+
+bool loading = true;
 
 
 class DashboardScreen extends StatefulWidget {
@@ -27,32 +25,77 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  List<Product> products = initialProducts;
-  List<AppUser> users = initialUsers;
+  List<Product> products = [];
+  List<AppUser> users = [];
 
-  void _addProduct(Product product) {
+  bool loading = true;
+
+  final productService = ProductService();
+  final userService = UserService();
+
+  @override
+  void initState() {
+    super.initState();
+    loadDashboardData();
+  }
+
+  Future<void> loadDashboardData() async {
+    setState(() => loading = true);
+
+    final p = await ProductService().getProducts();
+    final u = await UserService.getUsers();
+
     setState(() {
-      products = List.from(products)..add(product);
+      products = p;
+      users = u;
+      loading = false;
     });
   }
 
-  void _removeProduct(String id) {
-    setState(() {
-      products.removeWhere((p) => p.id == id);
-    });
+
+  void _addProduct(Product product) async {
+    bool success = await productService.addProduct(product);
+
+    if (success) {
+      setState(() {
+        products = List.from(products)..add(product);
+      });
+    }
   }
 
-  void _addUser(AppUser user) {
-    setState(() {
-      users = List.from(users)..add(user);
-    });
+  void _removeProduct(int id) async {
+    bool success = await productService.deleteProduct(id);
+
+    if (success) {
+      setState(() {
+        products.removeWhere((p) => p.id == id);
+      });
+    }
   }
 
-  void _removeUser(String id) {
-    setState(() {
-      users.removeWhere((u) => u.id == id);
-    });
+  void _addUser(AppUser user) async {
+    bool success = await UserService.addUser(
+      user.username,
+      user.role,
+    );
+
+    if (success) {
+      setState(() {
+        users = List.from(users)..add(user);
+      });
+    }
   }
+
+  void _removeUser(String id) async {
+    bool success = await UserService.deleteUser(id);
+
+    if (success) {
+      setState(() {
+        users.removeWhere((u) => u.id == id);
+      });
+    }
+  }
+
 
   // Constants Warna
   static const Color orangeAction = Color(0xFFFF9800);
@@ -63,10 +106,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    int lowStockCount = products.where((p) => p.stock <= 10).length; 
+    int lowStockCount = products.where((p) => p.stock <= 10).length;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F7F7), 
+      backgroundColor: const Color(0xFFF7F7F7),
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -77,11 +120,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: Center(
                 child: Column(
                   children: [
-                    const Icon(Icons.store, color: Colors.white, size: 40), // Ikon Toko FnB
+                    const Icon(
+                      Icons.store,
+                      color: Colors.white,
+                      size: 40,
+                    ), // Ikon Toko FnB
                     const SizedBox(height: 5),
                     Text(
                       'Admin Dashboard',
-                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      style: Theme.of(context).textTheme.headlineMedium
+                          ?.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
@@ -90,7 +138,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ),
             ),
-            
+
             // Statistik
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -98,9 +146,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
-                boxShadow: const [ 
+                boxShadow: const [
                   BoxShadow(
-                    color: Color.fromRGBO(0, 0, 0, 0.15), 
+                    color: Color.fromRGBO(0, 0, 0, 0.15),
                     spreadRadius: 1,
                     blurRadius: 3,
                     offset: Offset(0, 2),
@@ -113,12 +161,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   DashboardCard(
                     icon: Icons.local_cafe, // <-- ICON FNB
                     label: 'Total Menu',
-                    value: products.length.toString(), 
+                    value: products.length.toString(),
                   ),
                   DashboardCard(
                     icon: Icons.people,
                     label: 'Karyawan',
-                    value: users.length.toString(), 
+                    value: users.length.toString(),
                   ),
                 ],
               ),
@@ -131,13 +179,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Quick Actions',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
             ),
-            
+
             // Tombol Aksi
             Expanded(
               child: ListView(
@@ -149,11 +197,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ManageProductsScreen(
-                            products: products, 
-                            addProduct: _addProduct, 
-                            removeProduct: _removeProduct,
-                          )),
+                        builder: (context) => ManageProductsScreen(
+                          products: products,
+                          addProduct: _addProduct,
+                          removeProduct: _removeProduct,
+                        ),
+                      ),
                     ),
                   ),
                   ActionButton(
@@ -162,11 +211,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ManageUsersScreen(
-                            users: users, 
-                            addUser: _addUser, 
-                            removeUser: _removeUser,
-                          )),
+                        builder: (context) => ManageUsersScreen(
+                          users: users,
+                          addUser: _addUser,
+                          removeUser: _removeUser,
+                        ),
+                      ),
                     ),
                   ),
                   ActionButton(
@@ -175,19 +225,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ViewReportsScreen(
-                            totalProducts: products.length, 
-                            lowStockCount: lowStockCount, 
-                            totalUsers: users.length,
-                          )),
+                        builder: (context) => ViewReportsScreen(
+                          totalProducts: products.length,
+                          lowStockCount: lowStockCount,
+                          totalUsers: users.length,
+                          products: products,
+                        ),
+                      ),
                     ),
                   ),
                   ActionButton(
-                    text: 'Settings',
+                    text: 'Logout',
                     color: purpleAction,
                     onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Navigasi ke Halaman Settings')),
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
                       );
                     },
                   ),
