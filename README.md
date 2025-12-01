@@ -13,34 +13,22 @@ Aplikasi **Point of Sale (POS)** modern dengan sistem pemesanan customer–kasir
 
 ---
 
-🚀 Fitur Utama
-👤 Customer App
+## 🚀 Fitur Utama
+### 👤 Customer App
+ - Registrasi + login meja
+ - Melihat menu (appetizer, main course, dessert, minuman)
+ - Menambah item ke keranjang
+ - Mengirim pesanan ke kasir realtime
+ - Melihat status pesanan (menunggu → diproses → selesai)
+ - Memberikan rating produk
 
-Registrasi + login meja
-
-Melihat menu (appetizer, main course, dessert, minuman)
-
-Menambah item ke keranjang
-
-Mengirim pesanan ke kasir realtime
-
-Melihat status pesanan (menunggu → diproses → selesai)
-
-Memberikan rating produk
-
-💼 Kasir / Admin
-
-Melihat pesanan realtime semua meja
-
-Mengubah status pesanan
-
-Stok otomatis berkurang saat pesanan selesai
-
-CRUD Produk
-
-CRUD User (karyawan)
-
-Melihat laporan:
+### 💼 Kasir / Admin
+ - Melihat pesanan realtime semua meja
+ - Mengubah status pesanan
+ - Stok otomatis berkurang saat pesanan selesai
+ - CRUD Produk
+ - CRUD User (karyawan)
+ - Melihat laporan:
 
 Produk terlaris
 
