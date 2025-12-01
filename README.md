@@ -313,7 +313,6 @@ flutter run
 | `broadcast_update` | Server → All | Updated order info |
 | `stok_update` | Server → Kasir | Product stock info |
 
-
 ---
 
 ## 📊 Database Schema
