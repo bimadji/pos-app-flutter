@@ -7,10 +7,13 @@ Aplikasi **Point of Sale (POS)** modern dengan sistem pemesanan customer–kasir
 ## 📋 Daftar Isi
 - [Fitur Utama](#-fitur-utama)
 - [Tech Stack](#-tech-stack)
-- [Instalasi](#-instalasi)
+- [Instalasi](#️-instalasi)
 - [Struktur Folder](#-struktur-folder)
 - [Cara Kerja](#-cara-kerja)
 - [API & WebSocket](#-api--websocket)
+- [Database Schema](#-database-schema)
+- [Features Highlights](#-features-highlights)
+- [Troubleshooting](#️-troubleshooting)
 - [Kontributor](#-kontributor)
 
 ---
@@ -148,51 +151,12 @@ project-root/
 │           ├── item_row.dart
 │           └── order_summary.dart
 │
-├── backend/                      # Node.js Realtime Server
+├── backend/                      # Node.js Backend
 │   ├── server.js                 # WebSocket Server
 │   ├── package.json
-│   ├── .env                      # Socket Port & Config
+│   ├── .env                      # Environment Variables
 │   └── database/
 │       └── schema.sql            # Database Structure
-│
-├── pos_api/                      # PHP REST API Backend
-│   ├── auth/
-│   │   ├── login.php
-│   │   ├── register.php
-│   │   └── reset_password.php
-│   │
-│   ├── config/
-│   │   └── database.php
-│   │
-│   ├── customers/
-│   │   └── insert_customers.php
-│   │
-│   ├── dashboard/
-│   │   └── get_dashboard_stats.php
-│   │
-│   ├── logs/
-│   │   └── add_activity.php
-│   │
-│   ├── products/
-│   │   ├── add_product.php
-│   │   ├── delete_product.php
-│   │   ├── get_products.php
-│   │   └── update_product.php
-│   │
-│   ├── ratings/
-│   │   ├── get_all_rating.php
-│   │   ├── get_rating.php
-│   │   └── save_rating.php
-│   │
-│   ├── reports/
-│   │   ├── sales_summary.php
-│   │   └── stock_summary.php
-│   │
-│   └── users/
-│       ├── add_user.php
-│       ├── delete_user.php
-│       ├── get_users.php
-│       └── update_user.php
 │
 └── README.md
 ```
@@ -364,10 +328,10 @@ Customer bisa memberikan rating (1-5 bintang) + komentar untuk setiap produk. Ad
 
 ---
 
-## 👨‍💻 Kontributor    
+## 👨‍💻 Kontributor
 
-| No | Nama Lengkap           | Email                                           | GitHub Username                            |
-| -- | ---------------------- | ----------------------------------------------- | ------------------------------------------ |
+| No | Nama Lengkap | Email | GitHub Username |
+| -- | ------------ | ----- | --------------- |
 | 1  | **Bima Adji Kusuma** | [bimaadjikusuma@gmail.com](mailto:bimaadjikusuma@gmail.com) | [@bimadji](https://github.com/bimadji) |
 | 2  | **Ivan Adrian Bhagaskara** | [email2@example.com](mailto:email2@example.com) | [@username2](https://github.com/username2) |
 | 3  | **Muhammad Izza Narendra** | [email3@example.com](mailto:email3@example.com) | [@username3](https://github.com/username3) |
