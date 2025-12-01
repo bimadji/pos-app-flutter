@@ -1,7 +1,7 @@
 # 📦 POS App – Flutter + Node.js Realtime WebSocket + MySQL
 
-> Aplikasi Point of Sale (POS) modern dengan sistem pemesanan customer–kasir secara realtime menggunakan WebSocket, backend Node.js, dan database MySQL.
-
+Aplikasi Point of Sale (POS) modern dengan sistem pemesanan customer–kasir secara realtime menggunakan WebSocket, backend Node.js, dan database MySQL.
+---
 Aplikasi ini mendukung:
 
 Customer order dari device masing-masing
