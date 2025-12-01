@@ -11,7 +11,7 @@ Aplikasi **Point of Sale (POS)** modern dengan sistem pemesanan customer–kasir
 - [Struktur Folder](#-struktur-folder)
 - [Cara Kerja](#-cara-kerja)
 - [API & WebSocket](#-api--websocket)
-- [Kontributor](#-kontributor)
+- [Kontributor](#-)
 
 ---
 
@@ -364,7 +364,7 @@ Customer bisa memberikan rating (1-5 bintang) + komentar untuk setiap produk. Ad
 
 ---
 
-## 👨‍💻 Kontributor
+## 👨‍💻 Kontributor    
 
 | No | Nama Lengkap           | Email                                           | GitHub Username                            |
 | -- | ---------------------- | ----------------------------------------------- | ------------------------------------------ |
