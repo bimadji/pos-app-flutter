@@ -355,26 +355,6 @@ Customer bisa memberikan rating (1-5 bintang) + komentar untuk setiap produk. Ad
 
 ---
 
-## 🚀 Deployment
-
-### Untuk Production
-
-**Backend (Node.js):**
-- Deploy ke Heroku, Railway, atau VPS
-- Update `.env` dengan database production
-- Enable CORS jika diperlukan
-
-**Flutter App:**
-- Build APK: `flutter build apk --release`
-- Build iOS: `flutter build ios --release`
-- Publish ke Google Play Store / Apple App Store
-
-**Database:**
-- Gunakan managed database (AWS RDS, Digital Ocean, dll)
-- Backup rutin
-
----
-
 ## 🛠️ Troubleshooting
 
 | Masalah | Solusi |
@@ -386,26 +366,6 @@ Customer bisa memberikan rating (1-5 bintang) + komentar untuk setiap produk. Ad
 
 ---
 
-## 📝 Kontribusi
-
-Kami welcome kontribusi! Untuk berkontribusi:
-
-1. Fork repository ini
-2. Buat branch fitur baru: `git checkout -b feature/nama-fitur`
-3. Commit perubahan: `git commit -m 'Add: deskripsi perubahan'`
-4. Push ke branch: `git push origin feature/nama-fitur`
-5. Buka Pull Request
-
-Mohon ikuti coding standard yang ada dan tambahkan test jika perlu.
-
----
-
-## 📄 Lisensi
-
-Project ini menggunakan lisensi **MIT**. Lihat file [LICENSE](LICENSE) untuk detail lengkap.
-
----
-
 ## 👨‍💻 Kontak & Support
 
 - **Email**: your-email@example.com
@@ -413,16 +373,3 @@ Project ini menggunakan lisensi **MIT**. Lihat file [LICENSE](LICENSE) untuk det
 - **Issues**: Silakan buka issue untuk bug report atau feature request
 
 ---
-
-## 🎯 Roadmap
-
-- [ ] Integrasi payment gateway (Midtrans, Stripe)
-- [ ] Mobile app untuk kitchen display
-- [ ] Inventory management advanced
-- [ ] Analytics dashboard
-- [ ] Multi-location support
-- [ ] WhatsApp integration untuk notifikasi
-
----
-
-**Made with ❤️ using Flutter & Node.js**
