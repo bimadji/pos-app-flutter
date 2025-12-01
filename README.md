@@ -364,17 +364,13 @@ Customer bisa memberikan rating (1-5 bintang) + komentar untuk setiap produk. Ad
 
 ---
 
-## 👨‍💻 Kontak & Support
-
-- **Email**: your-email@example.com
-- **GitHub**: [yourusername](https://github.com/yourusername)
-- **Issues**: Silakan buka issue untuk bug report atau feature request
-
----
+## 👨‍💻 Kontributor
 
 | No | Nama Lengkap           | Email                                           | GitHub Username                            |
 | -- | ---------------------- | ----------------------------------------------- | ------------------------------------------ |
-| 1  | **Nama Kontributor 1** | [email1@example.com](mailto:email1@example.com) | [@username1](https://github.com/username1) |
-| 2  | **Nama Kontributor 2** | [email2@example.com](mailto:email2@example.com) | [@username2](https://github.com/username2) |
-| 3  | **Nama Kontributor 3** | [email3@example.com](mailto:email3@example.com) | [@username3](https://github.com/username3) |
-| 4  | **Nama Kontributor 4** | [email4@example.com](mailto:email4@example.com) | [@username4](https://github.com/username4) |
+| 1  | **Bima Adji Kusuma** | [bimaadjikusuma@gmail.com](mailto:bimaadjikusuma@gmail.com) | [@bimadji](https://github.com/bimadji) |
+| 2  | **Ivan Adrian Bhagaskara** | [email2@example.com](mailto:email2@example.com) | [@username2](https://github.com/username2) |
+| 3  | **Muhammad Izza Narendra** | [email3@example.com](mailto:email3@example.com) | [@username3](https://github.com/username3) |
+| 4  | **Muhamad Prabaswara Martana** | [email4@example.com](mailto:email4@example.com) | [@username4](https://github.com/username4) |
+
+---
