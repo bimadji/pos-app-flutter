@@ -4,7 +4,7 @@ Aplikasi **Point of Sale (POS)** modern dengan sistem pemesanan customer–kasir
 
 ---
 
-Aplikasi ini mendukung:
+## Aplikasi ini mendukung:
  - Customer order dari device masing-masing
  - Kasir menerima update pesanan realtime
  - Manajemen produk, user, rating, dan laporan
