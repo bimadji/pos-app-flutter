@@ -371,3 +371,10 @@ Customer bisa memberikan rating (1-5 bintang) + komentar untuk setiap produk. Ad
 - **Issues**: Silakan buka issue untuk bug report atau feature request
 
 ---
+
+| No | Nama Lengkap           | Email                                           | GitHub Username                            |
+| -- | ---------------------- | ----------------------------------------------- | ------------------------------------------ |
+| 1  | **Nama Kontributor 1** | [email1@example.com](mailto:email1@example.com) | [@username1](https://github.com/username1) |
+| 2  | **Nama Kontributor 2** | [email2@example.com](mailto:email2@example.com) | [@username2](https://github.com/username2) |
+| 3  | **Nama Kontributor 3** | [email3@example.com](mailto:email3@example.com) | [@username3](https://github.com/username3) |
+| 4  | **Nama Kontributor 4** | [email4@example.com](mailto:email4@example.com) | [@username4](https://github.com/username4) |
