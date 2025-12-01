@@ -150,12 +150,51 @@ project-root/
 │           ├── item_row.dart
 │           └── order_summary.dart
 │
-├── backend/                      # Node.js Backend
+├── backend/                      # Node.js Realtime Server
 │   ├── server.js                 # WebSocket Server
 │   ├── package.json
-│   ├── .env                      # Environment Variables
+│   ├── .env                      # Socket Port & Config
 │   └── database/
 │       └── schema.sql            # Database Structure
+│
+├── pos_api/                      # PHP REST API Backend
+│   ├── auth/
+│   │   ├── login.php
+│   │   ├── register.php
+│   │   └── reset_password.php
+│   │
+│   ├── config/
+│   │   └── database.php
+│   │
+│   ├── customers/
+│   │   └── insert_customers.php
+│   │
+│   ├── dashboard/
+│   │   └── get_dashboard_stats.php
+│   │
+│   ├── logs/
+│   │   └── add_activity.php
+│   │
+│   ├── products/
+│   │   ├── add_product.php
+│   │   ├── delete_product.php
+│   │   ├── get_products.php
+│   │   └── update_product.php
+│   │
+│   ├── ratings/
+│   │   ├── get_all_rating.php
+│   │   ├── get_rating.php
+│   │   └── save_rating.php
+│   │
+│   ├── reports/
+│   │   ├── sales_summary.php
+│   │   └── stock_summary.php
+│   │
+│   └── users/
+│       ├── add_user.php
+│       ├── delete_user.php
+│       ├── get_users.php
+│       └── update_user.php
 │
 └── README.md
 ```
@@ -274,21 +313,6 @@ flutter run
 | `broadcast_update` | Server → All | Updated order info |
 | `stok_update` | Server → Kasir | Product stock info |
 
-### REST API Endpoints (jika ada)
-```
-GET    /api/products          - Ambil semua produk
-POST   /api/products          - Tambah produk baru
-PUT    /api/products/:id      - Update produk
-DELETE /api/products/:id      - Hapus produk
-
-GET    /api/users             - Ambil semua user
-POST   /api/users             - Tambah user
-PUT    /api/users/:id         - Update user
-DELETE /api/users/:id         - Hapus user
-
-GET    /api/reports           - Ambil laporan
-GET    /api/reports/pdf       - Export PDF
-```
 
 ---
 
