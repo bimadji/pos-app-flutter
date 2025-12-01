@@ -11,8 +11,6 @@ Aplikasi **Point of Sale (POS)** modern dengan sistem pemesanan customer–kasir
 - [Struktur Folder](#-struktur-folder)
 - [Cara Kerja](#-cara-kerja)
 - [API & WebSocket](#-api--websocket)
-- [Kontribusi](#-kontribusi)
-- [Lisensi](#-lisensi)
 - [Kontak](#-kontak)
 
 ---
