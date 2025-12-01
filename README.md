@@ -1,283 +1,405 @@
-# POS App – Flutter + Node.js Realtime WebSocket + MySQL
+# 🏪 POS App – Flutter + Node.js WebSocket + MySQL
 
 Aplikasi **Point of Sale (POS)** modern dengan sistem pemesanan customer–kasir secara realtime menggunakan WebSocket, backend Node.js, dan database MySQL.
 
 ---
 
-## Aplikasi ini mendukung:
- - Customer order dari device masing-masing
- - Kasir menerima update pesanan realtime
- - Manajemen produk, user, rating, dan laporan
- - Generate PDF laporan + email nota
- - Autentikasi login
+## 📋 Daftar Isi
+- [Fitur Utama](#-fitur-utama)
+- [Tech Stack](#-tech-stack)
+- [Instalasi](#-instalasi)
+- [Struktur Folder](#-struktur-folder)
+- [Cara Kerja](#-cara-kerja)
+- [API & WebSocket](#-api--websocket)
+- [Kontribusi](#-kontribusi)
+- [Lisensi](#-lisensi)
+- [Kontak](#-kontak)
 
 ---
 
 ## 🚀 Fitur Utama
+
 ### 👤 Customer App
- - Registrasi + login meja
- - Melihat menu (appetizer, main course, dessert, minuman)
- - Menambah item ke keranjang
- - Mengirim pesanan ke kasir realtime
- - Melihat status pesanan (menunggu → diproses → selesai)
- - Memberikan rating produk
+- ✅ Registrasi dan login per meja
+- ✅ Browsing menu (appetizer, main course, dessert, minuman)
+- ✅ Menambah/mengurangi item ke keranjang
+- ✅ Mengirim pesanan ke kasir secara realtime
+- ✅ Tracking status pesanan (menunggu → diproses → selesai)
+- ✅ Memberikan rating produk (1-5 bintang + komentar)
 
 ### 💼 Kasir / Admin
- - Melihat pesanan realtime semua meja
- - Mengubah status pesanan
- - Stok otomatis berkurang saat pesanan selesai
- - CRUD Produk
- - CRUD User (karyawan)
- - Melihat laporan:
+- ✅ Dashboard realtime untuk semua pesanan dari meja
+- ✅ Update status pesanan secara instant
+- ✅ Manajemen Produk (Create, Read, Update, Delete)
+- ✅ Manajemen User/Karyawan (Create, Read, Update, Delete)
+- ✅ Sistem stok otomatis (berkurang saat pesanan selesai)
+- ✅ Laporan lengkap:
+  - Produk terlaris
+  - Produk stok rendah
+  - Total produk dan karyawan
+  - Riwayat penjualan
+- ✅ Export laporan PDF
+- ✅ Kirim email nota pembelian
 
-Produk terlaris
+### 🔌 Backend – Node.js WebSocket Server
+- ✅ Realtime communication antara customer dan kasir
+- ✅ Broadcast update ke semua client
+- ✅ Manajemen transaksi di MySQL
+- ✅ Sistem stok otomatis
+- ✅ Tracking status per meja
 
-Produk stok rendah
+---
 
-Total produk
+## 💻 Tech Stack
 
-Total karyawan
+**Frontend:**
+- Flutter (Dart)
+- Provider (state management)
+- http package (API requests)
+- SharedPreferences (local storage)
+- package:pdf & package:printing (PDF generation)
+- mailer package (email)
 
-Export laporan PDF
+**Backend:**
+- Node.js
+- WebSocket (ws package)
+- Express.js (optional, untuk REST API)
+- MySQL2 (database driver)
 
-Kirim email nota pembelian
+**Database:**
+- MySQL 5.7+
 
-🔌 Backend – Node.js WebSocket Server
+**Tools:**
+- Git
+- Android Studio / Xcode / VS Code
 
-Realtime communication (customer ↔ kasir)
+---
 
-Menyimpan transaksi ke MySQL
+## 📁 Struktur Folder
 
-Mengurangi stok otomatis saat pesanan selesai
-
-Menyimpan status per meja
-
-Broadcast ke semua client
-
-📁 Struktur Folder (ringkas)
-app/lib
+```
+project-root/
 │
-├── core/
-│   └── services/
-│       ├── api_services.dart
-│       ├── auth_services.dart
-│       ├── dashboard_service.dart
-│       ├── product_service.dart
-│       ├── rating_service.dart
-│       └── user_service.dart
+├── app/                          # Flutter Application
+│   └── lib/
+│       ├── core/
+│       │   └── services/         # API & Business Logic
+│       │       ├── api_services.dart
+│       │       ├── auth_services.dart
+│       │       ├── dashboard_service.dart
+│       │       ├── product_service.dart
+│       │       ├── rating_service.dart
+│       │       └── user_service.dart
+│       │
+│       ├── models/               # Data Models
+│       │   ├── item.dart
+│       │   ├── menu_appetizer.dart
+│       │   ├── menu_dessert.dart
+│       │   ├── menu_maincourse.dart
+│       │   ├── menu_minuman.dart
+│       │   ├── product.dart
+│       │   ├── rating.dart
+│       │   ├── sales_record.dart
+│       │   ├── table_order.dart
+│       │   └── user.dart
+│       │
+│       ├── providers/            # State Management
+│       │   └── auth_providers.dart
+│       │
+│       ├── screens/              # UI Screens
+│       │   ├── admin/
+│       │   │   ├── dashboard_screen.dart
+│       │   │   ├── edit_product_screen.dart
+│       │   │   ├── edit_user_screen.dart
+│       │   │   ├── manage_products_screen.dart
+│       │   │   ├── manage_users_screen.dart
+│       │   │   └── view_reports_screen.dart
+│       │   │
+│       │   ├── auth/
+│       │   │   ├── login_screen.dart
+│       │   │   ├── reset_password_screen.dart
+│       │   │   └── sign_up_screen.dart
+│       │   │
+│       │   ├── cashier/
+│       │   │   └── order_page.dart
+│       │   │
+│       │   └── customer/
+│       │       ├── menu/
+│       │       │   ├── body.dart
+│       │       │   └── menu_screen.dart
+│       │       ├── customer_form_screen.dart
+│       │       ├── customer_screen.dart
+│       │       ├── home_screen.dart
+│       │       ├── order_screen.dart
+│       │       ├── profile_screen.dart
+│       │       ├── rating_screen.dart
+│       │       └── splash_screen.dart
+│       │
+│       ├── theme/
+│       │   └── app_theme.dart
+│       │
+│       ├── utils/
+│       │   ├── email_sender.dart
+│       │   ├── format_currency.dart
+│       │   ├── pdf_report.dart
+│       │   └── receipt_email.dart
+│       │
+│       └── widgets/
+│           ├── action_button.dart
+│           ├── dashboard_card.dart
+│           ├── item_row.dart
+│           └── order_summary.dart
 │
-├── models/
-│   ├── item.dart
-│   ├── menu_appetizer.dart
-│   ├── menu_dessert.dart
-│   ├── menu_maincourse.dart
-│   ├── menu_minuman.dart
-│   ├── product.dart
-│   ├── rating.dart
-│   ├── sales_record.dart
-│   ├── table_order.dart
-│   └── user.dart
+├── backend/                      # Node.js Backend
+│   ├── server.js                 # WebSocket Server
+│   ├── package.json
+│   ├── .env                      # Environment Variables
+│   └── database/
+│       └── schema.sql            # Database Structure
 │
-├── providers/
-│   └── auth_providers.dart
-│
-├── screens/
-│   ├── admin/
-│   │   ├── dashboard_screen.dart
-│   │   ├── edit_product_screen.dart
-│   │   ├── edit_user_screen.dart
-│   │   ├── manage_products_screen.dart
-│   │   ├── manage_users_screen.dart
-│   │   └── view_reports_screen.dart
-│   │
-│   ├── auth/
-│   │   ├── login_screen.dart
-│   │   ├── reset_password_screen.dart
-│   │   └── sign_up_screen.dart
-│   │
-│   ├── cashier/
-│   │   └── order_page.dart
-│   │
-│   └── customer/
-│       ├── menu/
-│       │   ├── body.dart
-│       │   └── menu_screen.dart
-│       ├── customer_form_screen.dart
-│       ├── customer_screen.dart
-│       ├── home_screen.dart
-│       ├── order_screen.dart
-│       ├── profile_screen.dart
-│       ├── rating_screen.dart
-│       └── splash_screen.dart
-│
-├── theme/
-│   └── app_theme.dart
-│
-├── utils/
-│   ├── email_sender.dart
-│   ├── format_currency.dart
-│   ├── pdf_report.dart
-│   └── receipt_email.dart
-│
-└── widgets/
-├── action_button.dart
-├── dashboard_card.dart
-├── item_row.dart
-└── order_summary.dart
+└── README.md
+```
+
+---
+
+## ⚙️ Instalasi
+
+### Prerequisites
+Pastikan sudah install:
+- [Flutter SDK](https://flutter.dev/docs/get-started/install) (v3.0+)
+- [Node.js](https://nodejs.org/) (v14+)
+- [MySQL Server](https://www.mysql.com/downloads/) (v5.7+)
+- Git
+
+### 1. Clone Repository
+```bash
+git clone https://github.com/yourusername/pos-app.git
+cd pos-app
+```
+
+### 2. Setup Backend (Node.js WebSocket Server)
+```bash
+cd backend
+npm install
+```
+
+Buat file `.env`:
+```env
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=pos_database
+WS_PORT=8080
+```
+
+Jalankan server:
+```bash
+node server.js
+```
+
+Output:
+```
+WebSocket Server running on ws://0.0.0.0:8080
+```
+
+### 3. Setup Database (MySQL)
+```bash
+mysql -u root -p < backend/database/schema.sql
+```
+
+### 4. Setup Frontend (Flutter)
+```bash
+cd app
+flutter pub get
+```
+
+Update konfigurasi API di `lib/core/services/api_services.dart`:
+```dart
+const String API_URL = 'http://your-ip:3000';
+const String WS_URL = 'ws://your-ip:8080';
+```
+
+Jalankan aplikasi:
+```bash
+flutter run
+```
+
+---
+
+## 🔄 Cara Kerja
+
+### Customer → Kasir (Order Flow)
+1. Customer login dengan nomor meja
+2. Customer browsing menu dan menambah ke keranjang
+3. Customer kirim pesanan → Flutter mengirim WebSocket message:
+   ```json
+   {
+     "type": "cart_update",
+     "table_number": 5,
+     "customer_name": "Budi",
+     "items": [
+       { "name": "Nasi Goreng", "quantity": 2, "price": 15000 }
+     ],
+     "total": 30000
+   }
+   ```
+4. Server menerima → simpan ke MySQL → broadcast ke kasir
+5. Kasir melihat order realtime di dashboard
+6. Kasir ubah status pesanan (diproses → selesai)
+7. Customer melihat status update realtime
+
+### Kasir → System (Status Update)
+1. Kasir klik "Selesai" untuk pesanan
+2. Server kirim pesan:
+   ```json
+   {
+     "type": "status_update",
+     "table_number": 5,
+     "status": "selesai"
+   }
+   ```
+3. Server update MySQL dan kurangi stok produk
+4. Broadcast ke semua client (customer + kasir)
+5. Customer melihat pesanan sudah siap
 
-⚙️ Arsitektur Singkat
+---
 
-Flutter sebagai client (customer + kasir)
+## 🔌 API & WebSocket
 
-Node.js WebSocket Server untuk realtime komunikasi
+### WebSocket Events
+| Event | Direction | Payload |
+|-------|-----------|---------|
+| `cart_update` | Customer → Server | Order items & total |
+| `status_update` | Kasir → Server | Table number & status |
+| `broadcast_update` | Server → All | Updated order info |
+| `stok_update` | Server → Kasir | Product stock info |
 
-MySQL untuk penyimpanan data:
+### REST API Endpoints (jika ada)
+```
+GET    /api/products          - Ambil semua produk
+POST   /api/products          - Tambah produk baru
+PUT    /api/products/:id      - Update produk
+DELETE /api/products/:id      - Hapus produk
 
-produk
+GET    /api/users             - Ambil semua user
+POST   /api/users             - Tambah user
+PUT    /api/users/:id         - Update user
+DELETE /api/users/:id         - Hapus user
 
-transaksi
+GET    /api/reports           - Ambil laporan
+GET    /api/reports/pdf       - Export PDF
+```
 
-user
+---
 
-rating
+## 📊 Database Schema
 
-stok
+### Tabel Utama
+- **products**: Master produk (nama, harga, stok, kategori)
+- **users**: Data karyawan (nama, email, role, password)
+- **orders**: Transaksi (nomor meja, total, timestamp, status)
+- **order_items**: Detail item per transaksi
+- **ratings**: Rating produk dari customer
+- **sales_records**: Histori penjualan untuk laporan
 
-Data aplikasi di-cache lokal menggunakan SharedPreferences:
+---
 
-table_number
+## 🎨 Features Highlights
 
-customer_name
+### 📄 Export PDF Laporan
+Kasir bisa export laporan berisi:
+- Total penjualan harian/bulanan
+- Produk terlaris
+- Produk stok rendah
+- Daftar karyawan
 
-login session
+Menggunakan package `pdf` dan `printing`.
 
-🔌 Instalasi Backend – WebSocket Server
-1. Install dependencies
-   npm install ws mysql2
+### 📧 Email Nota Pembelian
+Setelah transaksi selesai, nota otomatis dikirim ke email customer:
+- Daftar item pesanan
+- Total harga
+- Waktu pembelian
+- Nomor meja & nomor order
 
-2. Jalankan server
-   node server.js
+### ⭐ Rating System
+Customer bisa memberikan rating (1-5 bintang) + komentar untuk setiap produk. Admin bisa lihat di dashboard.
 
+### 🔐 Autentikasi
+- Customer login dengan nomor meja
+- Kasir/Admin login dengan email & password
+- Session disimpan di SharedPreferences
 
-Server berjalan di:
+---
 
-ws://0.0.0.0:8080
+## 🚀 Deployment
 
-📱 Instalasi Flutter
-1. Install dependencies
-   flutter pub get
+### Untuk Production
 
-2. Jalankan aplikasi
-   flutter run
+**Backend (Node.js):**
+- Deploy ke Heroku, Railway, atau VPS
+- Update `.env` dengan database production
+- Enable CORS jika diperlukan
 
-🔄 Cara Kerja Realtime (berdasarkan server.js)
-Customer → Kasir
+**Flutter App:**
+- Build APK: `flutter build apk --release`
+- Build iOS: `flutter build ios --release`
+- Publish ke Google Play Store / Apple App Store
 
-Customer menambah item ke cart
+**Database:**
+- Gunakan managed database (AWS RDS, Digital Ocean, dll)
+- Backup rutin
 
-Flutter mengirim pesan:
+---
 
-{
-"type": "cart_update",
-"table_number": 5,
-"customer_name": "Budi",
-"items": [...],
-"total": 32000
-}
+## 🛠️ Troubleshooting
 
+| Masalah | Solusi |
+|---------|--------|
+| WebSocket connection refused | Pastikan server running dan IP benar di client |
+| Database connection error | Check DB credentials di `.env` |
+| Flutter dependencies error | Jalankan `flutter clean && flutter pub get` |
+| Port 8080 already in use | Ubah port di `server.js` dan client config |
 
-Server:
+---
 
-simpan transaksi ke MySQL
+## 📝 Kontribusi
 
-update memory transactions{}
+Kami welcome kontribusi! Untuk berkontribusi:
 
-broadcast ke semua client
+1. Fork repository ini
+2. Buat branch fitur baru: `git checkout -b feature/nama-fitur`
+3. Commit perubahan: `git commit -m 'Add: deskripsi perubahan'`
+4. Push ke branch: `git push origin feature/nama-fitur`
+5. Buka Pull Request
 
-Kasir → Customer
+Mohon ikuti coding standard yang ada dan tambahkan test jika perlu.
 
-Kasir ubah status meja:
+---
 
-{
-"type": "status_update",
-"table_number": 5,
-"status": "diproses"
-}
+## 📄 Lisensi
 
+Project ini menggunakan lisensi **MIT**. Lihat file [LICENSE](LICENSE) untuk detail lengkap.
 
-Server:
+---
 
-update status meja di MySQL
+## 👨‍💻 Kontak & Support
 
-jika selesai → kurangi stok
+- **Email**: your-email@example.com
+- **GitHub**: [yourusername](https://github.com/yourusername)
+- **Issues**: Silakan buka issue untuk bug report atau feature request
 
-broadcast ke semua client
+---
 
-📄 Laporan dan PDF
+## 🎯 Roadmap
 
-Fitur export PDF:
+- [ ] Integrasi payment gateway (Midtrans, Stripe)
+- [ ] Mobile app untuk kitchen display
+- [ ] Inventory management advanced
+- [ ] Analytics dashboard
+- [ ] Multi-location support
+- [ ] WhatsApp integration untuk notifikasi
 
-total produk
+---
 
-stok rendah
-
-produk terlaris
-
-produk paling sedikit terjual
-
-dan riwayat penjualan
-
-PDF menggunakan:
-
-package:pdf
-package:printing
-
-⭐ Rating System
-
-Customer dapat memberikan:
-
-bintang (1–5)
-
-komentar
-
-nama customer
-
-nomor meja
-
-Admin dapat melihat:
-
-daftar rating
-
-sorting berdasarkan tanggal
-
-📬 Email Nota
-
-Nota transaksi dikirim via email setelah transaksi selesai:
-
-list item
-
-total harga
-
-waktu pembelian
-
-detail meja
-
-nomor order
-
-✔️ Kesimpulan
-
-Proyek ini adalah aplikasi POS lengkap dengan:
-
-Flutter frontend (customer + kasir)
-
-Node.js WebSocket backend (realtime)
-
-MySQL database
-
-Manajemen data lengkap
-
-PDF laporan
-
-Email nota
-
-Rating system
+**Made with ❤️ using Flutter & Node.js**
