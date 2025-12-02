@@ -333,8 +333,8 @@ Customer bisa memberikan rating (1-5 bintang) + komentar untuk setiap produk. Ad
 | No | Nama Lengkap | Email | GitHub Username |
 | -- | ------------ | ----- | --------------- |
 | 1  | **Bima Adji Kusuma** | [bimaadjikusuma@gmail.com](mailto:bimaadjikusuma@gmail.com) | [@bimadji](https://github.com/bimadji) |
-| 2  | **Ivan Adrian Bhagaskara** | [email2@example.com](mailto:email2@example.com) | [@username2](https://github.com/username2) |
-| 3  | **Muhammad Izza Narendra** | [email3@example.com](mailto:email3@example.com) | [@username3](https://github.com/username3) |
-| 4  | **Muhamad Prabaswara Martana** | [email4@example.com](mailto:email4@example.com) | [@username4](https://github.com/username4) |
+| 2  | **Ivan Adrian Bhagaskara** | [email2@example.com](mailto:Muhammadizzanarendra2736@gmail.com) | [@mizarendra](https://github.com/mizarendra) |
+| 3  | **Muhammad Izza Narendra** | [email3@example.com](mailto:Muhammadizzanarendra2736@gmail.com) | [@mizarendra](https://github.com/mizarendra) |
+| 4  | **Muhamad Prabaswara Martana** | [email4@example.com](mailto:prbswrmrtana@gmail.com) | [@prbswrmrtana_boop](https://github.com/prbswrmrtana_boop) |
 
 ---
