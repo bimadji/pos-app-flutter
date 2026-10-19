@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="POS App — customer pesan, kasir konfirmasi, real-time dengan Flutter, Node.js WebSocket, dan MySQL">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b241a"/>
+      <stop offset="1" stop-color="#123a23"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 z" fill="#4f9b70"/>
+    </marker>
+    <style>
+      .t   { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+      .h1  { font-size: 46px; font-weight: 700; fill: #ffffff; }
+      .tag { font-size: 30px; font-weight: 700; fill: #ffffff; }
+      .sub { font-size: 17px; fill: #a8c7b5; }
+      .meta{ font-size: 12.5px; letter-spacing: 2.5px; fill: #7fae94; }
+      .pill{ font-size: 11px; letter-spacing: 2px; fill: #8fd6ac; }
+      .bt  { font-size: 15.5px; font-weight: 600; fill: #ffffff; }
+      .bs  { font-size: 12px; fill: #9dbfae; }
+    </style>
+  </defs>
+
+  <!-- background -->
+  <rect width="1200" height="400" rx="18" fill="url(#bg)"/>
+  <rect x="1" y="1" width="1198" height="398" rx="17" fill="none" stroke="#1f4d33"/>
+
+  <!-- decorative rings -->
+  <g fill="none" stroke="#ffffff" stroke-opacity="0.05">
+    <circle cx="955" cy="200" r="80"/>
+    <circle cx="955" cy="200" r="135"/>
+    <circle cx="955" cy="200" r="190"/>
+  </g>
+
+  <!-- eyebrow pill -->
+  <rect x="64" y="46" width="150" height="26" rx="13" fill="#ffffff" fill-opacity="0.07" stroke="#2f6a47"/>
+  <text class="t pill" x="80" y="63">REALTIME POS</text>
+
+  <!-- title -->
+  <g>
+    <circle cx="80" cy="130" r="17" fill="none" stroke="#9fe0bc" stroke-width="2"/>
+    <line x1="73" y1="137" x2="88" y2="122" stroke="#9fe0bc" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="80" cy="130" r="2.5" fill="#9fe0bc"/>
+    <text class="t h1" x="110" y="145">POS App</text>
+  </g>
+
+  <!-- tagline -->
+  <text class="t tag" x="64" y="212">Customer pesan. Kasir konfirmasi.</text>
+  <text class="t tag" x="64" y="252">Semua real-time dalam satu layar.</text>
+
+  <!-- description -->
+  <text class="t sub" x="64" y="296">Aplikasi Point of Sale Flutter dengan WebSocket, Node.js, dan MySQL.</text>
+
+  <!-- meta -->
+  <text class="t meta" x="64" y="356">FLUTTER + NODE.JS + MYSQL &#160;&#160;/&#160;&#160; BIMA &#183; IVAN &#183; IZZA &#183; PRABA</text>
+
+  <!-- diagram: boxes -->
+  <g>
+    <rect x="700" y="60" width="195" height="64" rx="12" fill="#16402b" stroke="#3a7a55"/>
+    <text class="t bt" x="718" y="88">Customer app</text>
+    <text class="t bs" x="718" y="110">Flutter &#183; login per meja</text>
+
+    <rect x="940" y="60" width="196" height="64" rx="12" fill="#16402b" stroke="#3a7a55"/>
+    <text class="t bt" x="958" y="88">Kasir dashboard</text>
+    <text class="t bs" x="958" y="110">Flutter &#183; admin</text>
+
+    <rect x="812" y="180" width="212" height="64" rx="12" fill="#16402b" stroke="#3a7a55"/>
+    <text class="t bt" x="830" y="208">WebSocket server</text>
+    <text class="t bs" x="830" y="230">Node.js &#183; port 8080</text>
+
+    <rect x="842" y="300" width="176" height="64" rx="12" fill="#16402b" stroke="#3a7a55"/>
+    <text class="t bt" x="860" y="328">MySQL</text>
+    <text class="t bs" x="860" y="350">transaksi &#183; produk</text>
+  </g>
+
+  <!-- diagram: arrows -->
+  <g fill="none" stroke="#4f9b70" stroke-width="2">
+    <line x1="797" y1="124" x2="862" y2="178" marker-end="url(#arrow)"/>
+    <line x1="1038" y1="124" x2="974" y2="178" marker-end="url(#arrow)"/>
+    <line x1="918" y1="244" x2="918" y2="298" marker-end="url(#arrow)"/>
+  </g>
+</svg>

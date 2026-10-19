@@ -1,6 +1,24 @@
-# POS App – Flutter, Node.js WebSocket & MySQL
+<p align="center">
+  <img src="assets/hero.svg" alt="POS App — customer pesan, kasir konfirmasi, real-time" width="100%">
+</p>
 
-Aplikasi Point of Sale (POS) dengan pemesanan real-time antara customer (per meja) dan kasir, menggunakan WebSocket, server Node.js, dan MySQL.
+<p align="center"><b>Sistem Point of Sale real-time: customer pesan dari meja, kasir konfirmasi dalam hitungan detik.</b></p>
+<p align="center">Flutter untuk customer dan kasir dalam satu aplikasi, Node.js WebSocket sebagai jantung realtime, MySQL sebagai sumber data.</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter&logoColor=white" alt="Flutter 3.x">
+  <img src="https://img.shields.io/badge/Node.js-14%2B-339933?logo=nodedotjs&logoColor=white" alt="Node.js 14+">
+  <img src="https://img.shields.io/badge/MySQL-5.7%2B-4479A1?logo=mysql&logoColor=white" alt="MySQL 5.7+">
+  <img src="https://img.shields.io/badge/Realtime-WebSocket-1f6feb" alt="WebSocket">
+</p>
+
+<p align="center">
+  <a href="#instalasi">Instalasi</a> ·
+  <a href="#struktur-proyek">Struktur Proyek</a> ·
+  <a href="#protokol-websocket">Protokol WebSocket</a> ·
+  <a href="#troubleshooting">Troubleshooting</a> ·
+  <a href="#kontributor">Kontributor</a>
+</p>
 
 ---
 
