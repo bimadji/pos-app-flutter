@@ -1,80 +1,121 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="POS App — customer pesan, kasir konfirmasi, real-time dengan Flutter, Node.js WebSocket, dan MySQL">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="POS App — struk pesanan real-time: customer, kasir, WebSocket, MySQL">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0b241a"/>
-      <stop offset="1" stop-color="#123a23"/>
-    </linearGradient>
-    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L6,3 L0,6 z" fill="#4f9b70"/>
-    </marker>
     <style>
-      .t   { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
-      .h1  { font-size: 46px; font-weight: 700; fill: #ffffff; }
-      .tag { font-size: 30px; font-weight: 700; fill: #ffffff; }
-      .sub { font-size: 17px; fill: #a8c7b5; }
-      .meta{ font-size: 12.5px; letter-spacing: 2.5px; fill: #7fae94; }
-      .pill{ font-size: 11px; letter-spacing: 2px; fill: #8fd6ac; }
-      .bt  { font-size: 15.5px; font-weight: 600; fill: #ffffff; }
-      .bs  { font-size: 12px; fill: #9dbfae; }
+      .mono  { font-family: "Courier New", Courier, monospace; }
+      .sans  { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+      .kicker{ font-size: 11px; letter-spacing: 3.5px; fill: #8a7f68; }
+      .title { font-size: 58px; font-weight: 800; letter-spacing: -1px; fill: #1b1813; }
+      .lead  { font-size: 23px; font-weight: 700; fill: #2b2519; }
+      .note  { font-size: 15px; fill: #6b6252; }
+      .names { font-size: 12px; letter-spacing: 3px; fill: #8a7f68; }
+      .lbl   { font-size: 12.5px; fill: #2b2519; }
+      .val   { font-size: 12.5px; fill: #6b6252; }
+      .hdr   { font-size: 10.5px; letter-spacing: 2px; fill: #9a8f77; }
+      .tot   { font-size: 13px; font-weight: 700; fill: #1b1813; }
+      .totv  { font-size: 13px; font-weight: 700; fill: #b23a2e; letter-spacing: 1px; }
+      .fine  { font-size: 9.5px; letter-spacing: 2px; fill: #9a8f77; }
     </style>
   </defs>
 
-  <!-- background -->
-  <rect width="1200" height="400" rx="18" fill="url(#bg)"/>
-  <rect x="1" y="1" width="1198" height="398" rx="17" fill="none" stroke="#1f4d33"/>
-
-  <!-- decorative rings -->
-  <g fill="none" stroke="#ffffff" stroke-opacity="0.05">
-    <circle cx="955" cy="200" r="80"/>
-    <circle cx="955" cy="200" r="135"/>
-    <circle cx="955" cy="200" r="190"/>
+  <rect width="1200" height="400" fill="#f6f1e6"/>
+  <g opacity="0.55">
+    <line x1="0" y1="20" x2="1200" y2="20" stroke="#efe7d6" stroke-width="1"/>
+    <line x1="0" y1="48" x2="1200" y2="48" stroke="#efe7d6" stroke-width="1"/>
+    <line x1="0" y1="76" x2="1200" y2="76" stroke="#efe7d6" stroke-width="1"/>
+    <line x1="0" y1="104" x2="1200" y2="104" stroke="#efe7d6" stroke-width="1"/>
+    <line x1="0" y1="132" x2="1200" y2="132" stroke="#efe7d6" stroke-width="1"/>
+    <line x1="0" y1="160" x2="1200" y2="160" stroke="#efe7d6" stroke-width="1"/>
+    <line x1="0" y1="188" x2="1200" y2="188" stroke="#efe7d6" stroke-width="1"/>
+    <line x1="0" y1="216" x2="1200" y2="216" stroke="#efe7d6" stroke-width="1"/>
+    <line x1="0" y1="244" x2="1200" y2="244" stroke="#efe7d6" stroke-width="1"/>
+    <line x1="0" y1="272" x2="1200" y2="272" stroke="#efe7d6" stroke-width="1"/>
+    <line x1="0" y1="300" x2="1200" y2="300" stroke="#efe7d6" stroke-width="1"/>
+    <line x1="0" y1="328" x2="1200" y2="328" stroke="#efe7d6" stroke-width="1"/>
+    <line x1="0" y1="356" x2="1200" y2="356" stroke="#efe7d6" stroke-width="1"/>
+    <line x1="0" y1="384" x2="1200" y2="384" stroke="#efe7d6" stroke-width="1"/>
   </g>
+  <rect x="0.5" y="0.5" width="1199" height="399" fill="none" stroke="#ddd3bd"/>
 
-  <!-- eyebrow pill -->
-  <rect x="64" y="46" width="150" height="26" rx="13" fill="#ffffff" fill-opacity="0.07" stroke="#2f6a47"/>
-  <text class="t pill" x="80" y="63">REALTIME POS</text>
+  <!-- left: brand block -->
+  <text class="mono kicker" x="68" y="60">POINT OF SALE SYSTEM</text>
+  <text class="sans title" x="66" y="128">POS APP</text>
+  <rect x="68" y="146" width="96" height="4" fill="#b23a2e"/>
 
-  <!-- title -->
+  <text class="sans lead" x="68" y="200">Pesanan masuk, kasir langsung tahu.</text>
+  <text class="sans lead" x="68" y="232">Status berubah tanpa refresh.</text>
+  <text class="sans note" x="68" y="276">Flutter di dua sisi, WebSocket di tengah, MySQL sebagai catatan.</text>
+
+  <text class="mono names" x="68" y="350">BIMA &#183; IVAN &#183; RENDRA &#183; PRAS</text>
+
+  <!-- right: order ticket -->
+  <rect x="706" y="44" width="430" height="312" rx="6" fill="#fffdf8" stroke="#d9cfb8"/>
+  <text class="mono hdr" x="726" y="76">ORDER #0042 &#183; MEJA 05</text>
+  <line x1="726" y1="92" x2="1116" y2="92" stroke="#d9cfb8" stroke-dasharray="4 4"/>
+
+  <text class="mono lbl" x="726" y="124">Customer app</text>
+  <text class="mono val" x="1116" y="124" text-anchor="end">Flutter</text>
+  <text class="mono lbl" x="726" y="152">Kasir dashboard</text>
+  <text class="mono val" x="1116" y="152" text-anchor="end">Flutter</text>
+  <text class="mono lbl" x="726" y="180">WebSocket :8080</text>
+  <text class="mono val" x="1116" y="180" text-anchor="end">Node.js</text>
+  <text class="mono lbl" x="726" y="208">MySQL</text>
+  <text class="mono val" x="1116" y="208" text-anchor="end">transaksi, produk</text>
+
+  <line x1="726" y1="228" x2="1116" y2="228" stroke="#d9cfb8" stroke-dasharray="4 4"/>
+  <text class="mono tot" x="726" y="256">TOTAL</text>
+  <text class="mono totv" x="1116" y="256" text-anchor="end">REAL-TIME</text>
+
   <g>
-    <circle cx="80" cy="130" r="17" fill="none" stroke="#9fe0bc" stroke-width="2"/>
-    <line x1="73" y1="137" x2="88" y2="122" stroke="#9fe0bc" stroke-width="2" stroke-linecap="round"/>
-    <circle cx="80" cy="130" r="2.5" fill="#9fe0bc"/>
-    <text class="t h1" x="110" y="145">POS App</text>
+    <rect x="726.0" y="272" width="3.2" height="40" fill="#1b1813"/>
+    <rect x="734.1" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="740.6" y="272" width="4.9" height="40" fill="#1b1813"/>
+    <rect x="750.4" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="756.9" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="763.4" y="272" width="6.5" height="40" fill="#1b1813"/>
+    <rect x="774.8" y="272" width="3.2" height="40" fill="#1b1813"/>
+    <rect x="782.9" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="789.4" y="272" width="3.2" height="40" fill="#1b1813"/>
+    <rect x="797.5" y="272" width="4.9" height="40" fill="#1b1813"/>
+    <rect x="807.2" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="813.8" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="820.2" y="272" width="3.2" height="40" fill="#1b1813"/>
+    <rect x="828.4" y="272" width="6.5" height="40" fill="#1b1813"/>
+    <rect x="839.8" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="846.2" y="272" width="3.2" height="40" fill="#1b1813"/>
+    <rect x="854.4" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="860.9" y="272" width="4.9" height="40" fill="#1b1813"/>
+    <rect x="870.6" y="272" width="3.2" height="40" fill="#1b1813"/>
+    <rect x="878.8" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="885.2" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="891.8" y="272" width="4.9" height="40" fill="#1b1813"/>
+    <rect x="901.5" y="272" width="3.2" height="40" fill="#1b1813"/>
+    <rect x="909.6" y="272" width="3.2" height="40" fill="#1b1813"/>
+    <rect x="917.8" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="924.2" y="272" width="6.5" height="40" fill="#1b1813"/>
+    <rect x="935.6" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="942.1" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="948.6" y="272" width="4.9" height="40" fill="#1b1813"/>
+    <rect x="958.4" y="272" width="3.2" height="40" fill="#1b1813"/>
+    <rect x="966.5" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="973.0" y="272" width="3.2" height="40" fill="#1b1813"/>
+    <rect x="981.1" y="272" width="4.9" height="40" fill="#1b1813"/>
+    <rect x="990.9" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="997.4" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="1003.9" y="272" width="3.2" height="40" fill="#1b1813"/>
+    <rect x="1012.0" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="1018.5" y="272" width="4.9" height="40" fill="#1b1813"/>
+    <rect x="1028.2" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="1034.8" y="272" width="3.2" height="40" fill="#1b1813"/>
+    <rect x="1042.9" y="272" width="3.2" height="40" fill="#1b1813"/>
+    <rect x="1051.0" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="1057.5" y="272" width="6.5" height="40" fill="#1b1813"/>
+    <rect x="1068.9" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="1075.4" y="272" width="3.2" height="40" fill="#1b1813"/>
+    <rect x="1083.5" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="1090.0" y="272" width="4.9" height="40" fill="#1b1813"/>
+    <rect x="1099.8" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="1106.2" y="272" width="1.6" height="40" fill="#1b1813"/>
+    <rect x="1112.8" y="272" width="3.2" height="40" fill="#1b1813"/>
   </g>
-
-  <!-- tagline -->
-  <text class="t tag" x="64" y="212">Customer pesan. Kasir konfirmasi.</text>
-  <text class="t tag" x="64" y="252">Semua real-time dalam satu layar.</text>
-
-  <!-- description -->
-  <text class="t sub" x="64" y="296">Aplikasi Point of Sale Flutter dengan WebSocket, Node.js, dan MySQL.</text>
-
-  <!-- meta -->
-  <text class="t meta" x="64" y="356">FLUTTER + NODE.JS + MYSQL &#160;&#160;/&#160;&#160; BIMA &#183; IVAN &#183; IZZA &#183; PRABA</text>
-
-  <!-- diagram: boxes -->
-  <g>
-    <rect x="700" y="60" width="195" height="64" rx="12" fill="#16402b" stroke="#3a7a55"/>
-    <text class="t bt" x="718" y="88">Customer app</text>
-    <text class="t bs" x="718" y="110">Flutter &#183; login per meja</text>
-
-    <rect x="940" y="60" width="196" height="64" rx="12" fill="#16402b" stroke="#3a7a55"/>
-    <text class="t bt" x="958" y="88">Kasir dashboard</text>
-    <text class="t bs" x="958" y="110">Flutter &#183; admin</text>
-
-    <rect x="812" y="180" width="212" height="64" rx="12" fill="#16402b" stroke="#3a7a55"/>
-    <text class="t bt" x="830" y="208">WebSocket server</text>
-    <text class="t bs" x="830" y="230">Node.js &#183; port 8080</text>
-
-    <rect x="842" y="300" width="176" height="64" rx="12" fill="#16402b" stroke="#3a7a55"/>
-    <text class="t bt" x="860" y="328">MySQL</text>
-    <text class="t bs" x="860" y="350">transaksi &#183; produk</text>
-  </g>
-
-  <!-- diagram: arrows -->
-  <g fill="none" stroke="#4f9b70" stroke-width="2">
-    <line x1="797" y1="124" x2="862" y2="178" marker-end="url(#arrow)"/>
-    <line x1="1038" y1="124" x2="974" y2="178" marker-end="url(#arrow)"/>
-    <line x1="918" y1="244" x2="918" y2="298" marker-end="url(#arrow)"/>
-  </g>
+  <text class="mono fine" x="726" y="340">TANPA REFRESH &#183; TANPA INPUT ULANG</text>
 </svg>

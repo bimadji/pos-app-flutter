@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="assets/hero.svg" alt="POS App — customer pesan, kasir konfirmasi, real-time" width="100%">
+  <img src="assets/hero.svg" alt="POS App — pesanan masuk, kasir langsung tahu, status berubah tanpa refresh" width="100%">
 </p>
 
-<p align="center"><b>Sistem Point of Sale real-time: customer pesan dari meja, kasir konfirmasi dalam hitungan detik.</b></p>
-<p align="center">Flutter untuk customer dan kasir dalam satu aplikasi, Node.js WebSocket sebagai jantung realtime, MySQL sebagai sumber data.</p>
+<p align="center"><b>Sistem Point of Sale real-time: customer memesan dari meja, kasir menerima dan mengubah status saat itu juga.</b></p>
+<p align="center">Flutter untuk customer dan kasir dalam satu aplikasi, WebSocket Node.js sebagai jalur datanya, MySQL untuk menyimpan transaksi dan produk.</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter&logoColor=white" alt="Flutter 3.x">
@@ -13,26 +13,14 @@
 </p>
 
 <p align="center">
+  <a href="#fitur">Fitur</a> ·
+  <a href="#arsitektur">Arsitektur</a> ·
   <a href="#instalasi">Instalasi</a> ·
   <a href="#struktur-proyek">Struktur Proyek</a> ·
   <a href="#protokol-websocket">Protokol WebSocket</a> ·
   <a href="#troubleshooting">Troubleshooting</a> ·
   <a href="#kontributor">Kontributor</a>
 </p>
-
----
-
-## Daftar Isi
-
-- [Fitur](#fitur)
-- [Tech Stack](#tech-stack)
-- [Arsitektur](#arsitektur)
-- [Struktur Proyek](#struktur-proyek)
-- [Prasyarat](#prasyarat)
-- [Instalasi](#instalasi)
-- [Protokol WebSocket](#protokol-websocket)
-- [Troubleshooting](#troubleshooting)
-- [Kontributor](#kontributor)
 
 ---
 
